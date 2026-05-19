@@ -1,5 +1,7 @@
 # 🚗 Car Maintenance Assistant
 
+中文 (./README.md) | English
+
 A simple and practical car maintenance tracking tool that helps you keep track of your vehicle's maintenance history, so you'll never miss a service interval again.
 
 ---
