@@ -61,13 +61,13 @@ car-maintenance-assistant/
 
 ## 🔧 Deployment Options
 
-### Option 1: Local Run (quick try)
+### Option 1: Local Run 
 
 ```bash
 python app.py
 ```
 
-### Option 2: Background Run + Auto-restart
+### Option 2: Background Run 
 
 ```bash
 # Run in background with nohup
