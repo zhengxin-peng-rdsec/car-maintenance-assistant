@@ -26,7 +26,7 @@ A simple and practical car maintenance tracking tool that helps you keep track o
 
 **1. Clone the project**
 ```bash
-git clone https://github.com/zhengxin-peng-rdsec/car-maintenance-assistant
+git clone https://github.com/zhengxin-peng-rdsec/car-maintenance-assistant.git
 cd car-maintenance-assistant
 ```
 
