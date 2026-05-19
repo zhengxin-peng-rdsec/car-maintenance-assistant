@@ -26,7 +26,7 @@
 
 **1. 克隆项目**
 ```bash
-git clone https://github.com/你的用户名/car-maintenance-assistant.git
+git clone https://github.com/zhengxin-peng-rdsec/car-maintenance-assistant.git
 cd car-maintenance-assistant
 ```
 
@@ -89,7 +89,6 @@ After=network.target
 
 [Service]
 Type=simple
-User=你的用户名
 WorkingDirectory=/path/to/car-maintenance-assistant
 ExecStart=/usr/bin/python3 app.py
 Restart=always
