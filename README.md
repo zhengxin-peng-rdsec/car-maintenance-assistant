@@ -61,13 +61,13 @@ car-maintenance-assistant/
 
 ## 🔧 部署方式
 
-### 方式一：本地运行（适合尝鲜）
+### 方式一：本地运行
 
 ```bash
 python app.py
 ```
 
-### 方式二：后台运行 + 自动重启
+### 方式二：后台运行
 
 ```bash
 # 使用 nohup 后台运行
@@ -106,7 +106,7 @@ sudo systemctl enable car-maintenance
 sudo systemctl start car-maintenance
 ```
 
-### 方式四：Nginx 反向代理（远程访问）
+### 方式四：Nginx 反向代理
 
 ```nginx
 server {
