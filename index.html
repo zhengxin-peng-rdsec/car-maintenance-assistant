@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>汽车保养助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f6fa;
+            min-height: 100vh;
+        }
+        
+        /* 顶部导航 */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        
+        .vehicle-info {
+            text-align: right;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .vehicle-info .plate {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        /* 主内容 */
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+        
+        /* 车辆卡片 */
+        .vehicle-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .vehicle-card h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .vehicle-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+        
+        .detail-item {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 10px;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 4px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            color: #333;
+            font-weight: 600;
+        }
+        
+        /* 保养提醒区域 */
+        .maintenance-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* 柱状图样式 */
+        .progress-bar-container {
+            margin-bottom: 16px;
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .progress-name {
+            font-size: 15px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .progress-stats {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .progress-stats .remaining {
+            font-weight: 600;
+        }
+        
+        .progress-stats .remaining.warning {
+            color: #f59e0b;
+        }
+        
+        .progress-stats .remaining.danger {
+            color: #ef4444;
+        }
+        
+        /* 圆角长方形柱状图 */
+        .progress-bar {
+            height: 24px;
+            background: #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            border-radius: 12px;
+            transition: width 0.3s ease;
+            position: relative;
+        }
+        
+        .progress-fill.blue {
+            background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%);
+        }
+        
+        .progress-fill.yellow {
+            background: linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%);
+        }
+        
+        .progress-fill.red {
+            background: linear-gradient(90deg, #ef4444 0%, #f87171 100%);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .progress-fill span {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: white;
+            font-weight: 600;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        /* 底部按钮 */
+        .bottom-actions {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        /* 空状态 */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+        }
+        
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        /* 预留底边距 */
+        .bottom-spacer {
+            height: 80px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <h1>🚗 汽车保养助手</h1>
+            <div class="vehicle-info">
+                <div class="plate">苏C88888</div>
+                <div>宝马 325Li · 2022款</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- 车辆信息卡片 -->
+        <div class="vehicle-card">
+            <h2>📋 车辆信息</h2>
+            <div class="vehicle-details">
+                <div class="detail-item">
+                    <div class="detail-label">当前里程</div>
+                    <div class="detail-value">60,230 km</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">累计保养</div>
+                    <div class="detail-value">8 次</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">购买日期</div>
+                    <div class="detail-value">2022-06-15</div>
+                </div>
+                <div class="detail-item">
+                    <div class="detail-label">下次年检</div>
+                    <div class="detail-value">2026-06-15</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 保养提醒 -->
+        <div class="maintenance-section">
+            <h2 class="section-title">🔧 保养提醒</h2>
+            
+            <!-- 机油 -->
+            <div class="progress-bar-container">
+                <div class="progress-header">
+                    <span class="progress-name">🛢️ 机油保养</span>
+                    <span class="progress-stats">
+                        剩余 <span class="remaining">1,500 km</span> · 每7500km
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill yellow" style="width: 20%;">
+                        <span>20%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 刹车片 -->
+            <div class="progress-bar-container">
+                <div class="progress-header">
+                    <span class="progress-name">🛑 刹车片</span>
+                    <span class="progress-stats">
+                        剩余 <span class="remaining danger">200 km</span> · 每40000km
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill red" style="width: 5%;">
+                        <span>5%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 空气滤芯 -->
+            <div class="progress-bar-container">
+                <div class="progress-header">
+                    <span class="progress-name">🌬️ 空气滤芯</span>
+                    <span class="progress-stats">
+                        剩余 <span class="remaining">12,000 km</span> · 每30000km
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill blue" style="width: 60%;">
+                        <span>60%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 变速箱油 -->
+            <div class="progress-bar-container">
+                <div class="progress-header">
+                    <span class="progress-name">⚙️ 变速箱油</span>
+                    <span class="progress-stats">
+                        剩余 <span class="remaining">55,000 km</span> · 每80000km
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill blue" style="width: 68.75%;">
+                        <span>69%</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 火花塞 -->
+            <div class="progress-bar-container">
+                <div class="progress-header">
+                    <span class="progress-name">⚡ 火花塞</span>
+                    <span class="progress-stats">
+                        剩余 <span class="remaining">89,000 km</span> · 每100000km
+                    </span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill blue" style="width: 89%;">
+                        <span>89%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bottom-spacer"></div>
+    </div>
+    
+    <div class="bottom-actions">
+        <button class="btn btn-secondary" onclick="alert('添加车辆')">➕ 车辆</button>
+        <button class="btn btn-secondary" onclick="alert('添加保养项目')">🔧 项目</button>
+        <button class="btn btn-primary" onclick="alert('添加保养记录')">📝 保养</button>
+    </div>
+</body>
+</html>
