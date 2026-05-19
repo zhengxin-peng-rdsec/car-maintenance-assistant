@@ -1,6 +1,6 @@
 # 🚗 汽车保养助手/Car-maintenance-assistant
 
-中文 | [English] (./README_EN.md)
+中文 | [English (./README_EN.md)]
 
 一个简单实用的汽车保养记录管理工具，帮助你跟踪车辆保养历史，再也不会错过保养周期。
 
