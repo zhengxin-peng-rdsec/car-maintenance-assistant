@@ -26,7 +26,7 @@ A simple and practical car maintenance tracking tool that helps you keep track o
 
 **1. Clone the project**
 ```bash
-git clone https://github.com/your-username/car-maintenance-assistant.git
+git clone https://github.com/zhengxin-peng-rdsec/car-maintenance-assistant
 cd car-maintenance-assistant
 ```
 
@@ -89,7 +89,6 @@ After=network.target
 
 [Service]
 Type=simple
-User=your-username
 WorkingDirectory=/path/to/car-maintenance-assistant
 ExecStart=/usr/bin/python3 app.py
 Restart=always
